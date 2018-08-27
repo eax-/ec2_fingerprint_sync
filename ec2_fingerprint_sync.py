@@ -48,7 +48,7 @@ def sync_known_hosts():
         f.seek(0, os.SEEK_SET)
         known_hosts = f.readlines()
         already_known = get_dns_from_knownhosts(known_hosts)
-        fps_to_add = list(filter(lambda x: x[0] not in already_known, get_fingerprints_from_aws().items()))
+        fps_to_add = list(filter(lambda x: x[0] and x[0] not in already_known, get_fingerprints_from_aws().items()))
         if fps_to_add:
             print("adding to ~/.ssh/known_hosts:\n", "\n".join(" " + fp[0] for fp in fps_to_add), sep = "")
             f.seek(0, os.SEEK_END)
